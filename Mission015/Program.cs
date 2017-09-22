@@ -15,6 +15,8 @@ namespace Mission015
     {
         static void Main(string[] args)
         {
+            //LoadBitmapMission015();   // Convert bitmap to text
+
             if (args.Length < 1)
             {
                 Console.WriteLine("Type: mission015 <md5>");
@@ -33,11 +35,10 @@ namespace Mission015
             string guesspass = Find5CharPassword(args[0]);
 
             Console.WriteLine("Found password:");
-            Console.WriteLine((guesspass != null) ?  $"\"{guesspass}\"" : " :( Not found");
+            Console.WriteLine((guesspass != null) ? $"\"{guesspass}\"" : " :( Not found");
 
-            //LoadBitmapMission015();   // Convert bitmap to text
 
-            Console.ReadLine();   
+            Console.ReadLine();
         }
 
         public static string ComputeMD5(string pass)
@@ -68,7 +69,7 @@ namespace Mission015
                     it++;
                     if ((it % cwl_step) == 0)
                     {
-                        long md5ps = (long) ((double)cwl_step * 1000 / watch.ElapsedMilliseconds);
+                        long md5ps = (long)((double)cwl_step * 1000 / watch.ElapsedMilliseconds);
                         watch.Restart();
                         Console.WriteLine($"({it}) {Encoding.ASCII.GetString(currpass)}  - {md5ps} md5/s");
                     }
@@ -81,7 +82,7 @@ namespace Mission015
                     }
 
                 } while (NextPass(currpass));
-                
+
                 return null;
             }
         }
@@ -112,30 +113,6 @@ namespace Mission015
                         ba[pos] = (byte)'a';
                     else
                         ba[pos]++;
-                    continu = false;
-                }
-            } while (continu);
-            return true;
-        }
-
-        // Podaje następną permutację "AAA", "BAA", "CAA", ..., "ZAA", "ABA", "BBA", itd.
-        // Kolejne znaki: A-Z
-        public static bool NextPass1(byte[] ba)
-        {
-            int pos = 0;
-            bool continu = true;
-            do
-            {
-                if (ba[pos] == 'Z')
-                {
-                    ba[pos] = (byte)'A';
-                    pos++;
-                    if (pos >= ba.Length)
-                        return false;
-                }
-                else
-                {
-                    ba[pos]++;
                     continu = false;
                 }
             } while (continu);
@@ -197,18 +174,6 @@ namespace Mission015
             }
             // Save to file
             File.WriteAllText("col_to_ascii.txt", sbb.ToString());
-
-            // Print colors in each column
-            Console.WriteLine("Rows:");
-            for (int x = 0; x < his.Length; x++)
-            {
-                string s = string.Format(" x {0,4}: ", x);
-                foreach (KeyValuePair<Color, int> h in his[x])
-                {
-                    s += $"{h.Key}={h.Value} ";
-                }
-                Console.WriteLine(s);
-            }
         }
 
         public static void SaveToSCV<K, V>(string filename, IEnumerable<IDictionary<K, V>> items,
