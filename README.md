@@ -1,1 +1,1 @@
-Tutaj wrzucam rozwi�zania do misji Gynvael'a.
+﻿Tutaj wrzucam rozwiązania do misji Gynvael'a.
