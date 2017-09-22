@@ -1,1 +1,1 @@
-﻿Solutions to Gynvael's mission.
+﻿# Solutions to Gynvael's missions.
