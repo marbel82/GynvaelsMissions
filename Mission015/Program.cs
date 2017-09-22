@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace Mission015
 {
@@ -13,12 +15,142 @@ namespace Mission015
     {
         static void Main(string[] args)
         {
+            if (args.Length < 1)
+            {
+                Console.WriteLine("Type: mission015 <md5>");
+                Console.WriteLine("eg.: mission015 e6d9fe6df8fd2a07ca6636729d4a615a");
+                return;
+            }
+            if (args[0].Length != 32)
+            {
+                Console.WriteLine($"Bad parameter: {args[0]}");
+                return;
+            }
 
-            LoadBitmapMission015();
+            //string tmd5 = ComputeMD5("AAZAA");
 
-            //GenerateRandomBitmap();
+            // Finding a matching hash
+            string guesspass = Find5CharPassword(args[0]);
 
+            Console.WriteLine("Found password:");
+            Console.WriteLine((guesspass != null) ?  $"\"{guesspass}\"" : " :( Not found");
+
+            //LoadBitmapMission015();   // Convert bitmap to text
+
+            Console.ReadLine();   
         }
+
+        public static string ComputeMD5(string pass)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                return BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(pass))).Replace("-", null).ToLower();
+            }
+        }
+
+        public static string Find5CharPassword(string passMD5)
+        {
+            long it = 0;
+            byte[] passhash = StringToByteArray(passMD5);
+            //byte[] currpass = new byte[5] { (byte)'A', (byte)'A', (byte)'A', (byte)'A', (byte)'A' };
+            byte[] currpass = new byte[5] { 32, 32, 32, 32, 32 };
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            const long cwl_step = 1000000;
+
+            using (MD5 md5 = MD5.Create())
+            {
+                do
+                {
+                    // Print some progress info
+                    it++;
+                    if ((it % cwl_step) == 0)
+                    {
+                        long md5ps = (long) ((double)cwl_step * 1000 / watch.ElapsedMilliseconds);
+                        watch.Restart();
+                        Console.WriteLine($"({it}) {Encoding.ASCII.GetString(currpass)}  - {md5ps} md5/s");
+                    }
+
+                    byte[] ps_md5 = md5.ComputeHash(currpass);
+
+                    if (passhash.SequenceEqual(ps_md5))
+                    {
+                        return Encoding.ASCII.GetString(currpass);
+                    }
+
+                } while (NextPass(currpass));
+                
+                return null;
+            }
+        }
+
+        // Podaje kolejną permutację tablicy {65,32,32}, {66,32,32},
+        // ... {'z',66,32}, {32,67,32}   itd.
+        // Kolejne znaki: ' ', '!', A-Z, a-z
+        public static bool NextPass(byte[] ba)
+        {
+            int pos = 0;
+            bool continu = true;
+            do
+            {
+                if (ba[pos] == 'z')
+                {
+                    ba[pos] = 32;
+                    pos++;
+                    if (pos >= ba.Length)
+                        return false;
+                }
+                else
+                {
+                    if (ba[pos] == 32)
+                        ba[pos] = (byte)'!';
+                    else if (ba[pos] == '!')
+                        ba[pos] = (byte)'A';
+                    else if (ba[pos] == 'Z')
+                        ba[pos] = (byte)'a';
+                    else
+                        ba[pos]++;
+                    continu = false;
+                }
+            } while (continu);
+            return true;
+        }
+
+        // Podaje następną permutację "AAA", "BAA", "CAA", ..., "ZAA", "ABA", "BBA", itd.
+        // Kolejne znaki: A-Z
+        public static bool NextPass1(byte[] ba)
+        {
+            int pos = 0;
+            bool continu = true;
+            do
+            {
+                if (ba[pos] == 'Z')
+                {
+                    ba[pos] = (byte)'A';
+                    pos++;
+                    if (pos >= ba.Length)
+                        return false;
+                }
+                else
+                {
+                    ba[pos]++;
+                    continu = false;
+                }
+            } while (continu);
+            return true;
+        }
+
+        public static byte[] StringToByteArray(String hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
+        }
+
         public static void LoadBitmapMission015()
         {
             Bitmap bmp = new Bitmap("mission_15_leak.png");
@@ -43,10 +175,11 @@ namespace Mission015
                     if (!his[x].ContainsKey(p))
                         his[x][p] = 1;
                     else
-                        his[x][p]++;  
+                        his[x][p]++;
                 }
             }
 
+            // How many different colors were found
             var dif_colors = his.SelectMany(x => x.Keys).Distinct();
 
             Console.WriteLine("Colors used in bitmap:");
@@ -63,7 +196,7 @@ namespace Mission015
                 sbb.Append((char)h[colr]);
             }
             // Save to file
-            File.WriteAllText("cols_to_ascii.txt", sbb.ToString());
+            File.WriteAllText("col_to_ascii.txt", sbb.ToString());
 
             // Print colors in each column
             Console.WriteLine("Rows:");
@@ -100,54 +233,6 @@ namespace Mission015
             // Save to CSV file
             File.WriteAllText(filename, csv.ToString());
         }
-        /*
-            StringBuilder csv = new StringBuilder();
-            // List all `his` elements, print each color count separated by a semicolumn
-            for (int x = 0; x < his.Length; x++)
-            {
-                bool sec = false;
-                foreach (Color col in dif_colors) 
-                {
-                    if (sec)
-                        csv.Append(";");
-                    else
-                        sec = true;
 
-                    csv.Append($"{his[x][col]}"); 
-                }
-                csv.AppendLine();
-            }
-            // Save to CSV file
-            File.WriteAllText("counts_in_cols.csv", csv.ToString());        */
-
-        public static void GenerateRandomBitmap()
-        {
-            int width = 640, height = 320;
-
-            //bitmap
-            Bitmap bmp = new Bitmap(width, height);
-
-            //random number
-            Random rand = new Random();
-
-            //create random pixels
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    //generate random ARGB value
-                    int a = rand.Next(256);
-                    int r = rand.Next(256);
-                    int g = rand.Next(256);
-                    int b = rand.Next(256);
-
-                    //set ARGB value
-                    bmp.SetPixel(x, y, Color.FromArgb(a, r, g, b));
-                }
-            }
-
-            //save (write) random pixel image
-            bmp.Save("RandomImage.png");
-        }
     }
 }
