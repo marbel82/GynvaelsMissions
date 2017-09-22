@@ -1,0 +1,1 @@
+Tutaj wrzucam rozwi¹zania do misji Gynvael'a.
