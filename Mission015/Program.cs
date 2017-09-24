@@ -13,10 +13,13 @@ namespace Mission015
 {
     class Program
     {
+        //_________________________________________________________________________________________
         static void Main(string[] args)
         {
+            // First Part
             //LoadBitmapMission015();   // Convert bitmap to text
 
+            // Second Part
             if (args.Length < 1)
             {
                 Console.WriteLine("Type: mission015 <md5>");
@@ -35,12 +38,11 @@ namespace Mission015
             string guesspass = Find5CharPassword(args[0]);
 
             Console.WriteLine("Found password:");
-            Console.WriteLine((guesspass != null) ? $"\"{guesspass}\"" : " :( Not found");
-
+            Console.WriteLine((guesspass != null) ? $"\"{guesspass}\"" : " :( Not found");   
 
             Console.ReadLine();
         }
-
+        //_________________________________________________________________________________________
         public static string ComputeMD5(string pass)
         {
             using (MD5 md5 = MD5.Create())
@@ -48,7 +50,8 @@ namespace Mission015
                 return BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(pass))).Replace("-", null).ToLower();
             }
         }
-
+        //_________________________________________________________________________________________
+        // Finds MD5 for passMD5
         public static string Find5CharPassword(string passMD5)
         {
             long it = 0;
@@ -86,10 +89,10 @@ namespace Mission015
                 return null;
             }
         }
-
-        // Podaje kolejną permutację tablicy {65,32,32}, {66,32,32},
+        //_________________________________________________________________________________________
+        // Return next permutation in table: {65,32,32}, {66,32,32},
         // ... {'z',66,32}, {32,67,32}   itd.
-        // Kolejne znaki: ' ', '!', A-Z, a-z
+        // Subsequent bytes: ' ', '!', A-Z, a-z
         public static bool NextPass(byte[] ba)
         {
             int pos = 0;
@@ -118,7 +121,7 @@ namespace Mission015
             } while (continu);
             return true;
         }
-
+        //_________________________________________________________________________________________
         public static byte[] StringToByteArray(String hex)
         {
             int NumberChars = hex.Length;
@@ -127,7 +130,7 @@ namespace Mission015
                 bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
             return bytes;
         }
-
+        //_________________________________________________________________________________________
         public static void LoadBitmapMission015()
         {
             Bitmap bmp = new Bitmap("mission_15_leak.png");
@@ -173,9 +176,12 @@ namespace Mission015
                 sbb.Append((char)h[colr]);
             }
             // Save to file
-            File.WriteAllText("col_to_ascii.txt", sbb.ToString());
+            File.WriteAllText("cols_to_ascii.txt", sbb.ToString());
         }
-
+        //_________________________________________________________________________________________
+        // Save items to SVG file.
+        // Each item is placed in a row:
+        // row: valueFun(item, keys[first]);<valueFun(item, keys[second]);...
         public static void SaveToSCV<K, V>(string filename, IEnumerable<IDictionary<K, V>> items,
             IEnumerable<K> keys, Func<IDictionary<K, V>, K, V> valueFun)
         {
@@ -198,6 +204,6 @@ namespace Mission015
             // Save to CSV file
             File.WriteAllText(filename, csv.ToString());
         }
-
+        //_________________________________________________________________________________________
     }
 }
