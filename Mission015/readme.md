@@ -1,4 +1,4 @@
-﻿# Gynvael’s Mission 015
+﻿# Gynvael’s Mission 015 (C#)
 
 
 ```
@@ -24,6 +24,8 @@ blogpost / post your solution / code online, please add a link as well!
 
 P.S. I'll show/explain the solution on the stream in ~one week.
 ```
+
+## Part 1/2
 
 Downloaded chart:
 
@@ -66,6 +68,8 @@ And I saved the red color values to the file.
     File.WriteAllText("cols_to_ascii.txt", sb.ToString());
 ```
 
+## Part 2/2
+
 Now we have php code:
 
 ``` php
@@ -103,3 +107,19 @@ for ($i = 0; $i < 25; $i += 5) {
 
 die("GW!");
 ```
+
+We have 5 MD5 Checksum and we we need to find 5 passwords.
+
+``` C#
+    string guesspass = Find5CharPassword(args[0]);
+```
+
+I ran the program 5 times for each checksum:
+![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/finding%20pieces%20of%20password.png)
+
+After about 14 min I see that one password was not found.
+I guess it's missing '!'
+
+Finally:
+![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/finding%20pieces%20of%20password%202.png)
+
