@@ -115,11 +115,16 @@ We have 5 MD5 Checksum and we we need to find 5 passwords.
 ```
 
 I ran the program 5 times for each checksum:
+
 ![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/finding%20pieces%20of%20password.png)
 
 After about 14 min I see that one password was not found.
 I guess it's missing '!'
 
 Finally:
+
 ![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/finding%20pieces%20of%20password%202.png)
 
+Password is:
+
+### Pie charts are delicious!
