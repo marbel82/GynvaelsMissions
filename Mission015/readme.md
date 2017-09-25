@@ -56,14 +56,50 @@ And I saved the red color values to the file.
     // Red color
     Color colr = Color.FromArgb(255, 255, 0, 0);
 
-    StringBuilder sbb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
     foreach (var h in his)
     {
-        sbb.Append((char)h[colr]);
+        sb.Append((char)h[colr]);
     }
     
     // Save to file
-    File.WriteAllText("cols_to_ascii.txt", sbb.ToString());
+    File.WriteAllText("cols_to_ascii.txt", sb.ToString());
 ```
 
+Now we have php code:
 
+``` php
+<?php
+
+if (!isset($_GET['password']) || !is_string($_GET['password'])) {
+  die("bad password");
+}
+
+$p = $_GET['password'];
+
+if (strlen($p) !== 25) {
+  die("bad password");
+}
+
+if (md5($p) !== 'e66c97b8837d0328f3e5522ebb058f85') {
+  die("bad password");
+}
+
+// Split the password in five and check the pieces.
+// We need to be sure!
+$values = array(
+  0 => 'e6d9fe6df8fd2a07ca6636729d4a615a',
+  5 => '273e97dc41693b152c71715d099a1049',
+  10 => 'bd014fafb6f235929c73a6e9d5f1e458',
+  15 => 'ab892a96d92d434432d23429483c0a39',
+  20 => 'b56a807858d5948a4e4604c117a62c2d'
+);
+
+for ($i = 0; $i < 25; $i += 5) {
+  if (md5(substr($p, $i, 5)) !== $values[$i]) {
+    die("bad password");
+  }
+}
+
+die("GW!");
+```
