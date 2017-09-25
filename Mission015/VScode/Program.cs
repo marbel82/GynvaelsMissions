@@ -170,13 +170,13 @@ namespace Mission015
             // Red color
             Color colr = Color.FromArgb(255, 255, 0, 0);
 
-            StringBuilder sbb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             foreach (var h in his)
             {
-                sbb.Append((char)h[colr]);
+                sb.Append((char)h[colr]);
             }
             // Save to file
-            File.WriteAllText("cols_to_ascii.txt", sbb.ToString());
+            File.WriteAllText("cols_to_ascii.txt", sb.ToString());
         }
         //_________________________________________________________________________________________
         // Save items to SVG file.
