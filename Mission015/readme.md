@@ -29,4 +29,41 @@ Downloaded chart:
 
 ![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/mission_15_leak%20shadow.png)
 
+For each column I created a dictionary where the key is color, and the value is the number of occurrences.
+
+``` C#
+    Dictionary<Color, int>[] his = new Dictionary<Color, int>[W];
+
+    Console.WriteLine($"Analyse rows...");
+    for (int x = 0; x < W; x++)
+    {
+        his[x] = new Dictionary<Color, int>();
+        for (int y = 0; y < H; y++)
+        {
+            Color p = bmp.GetPixel(x, y);
+
+            if (!his[x].ContainsKey(p))
+                his[x][p] = 1;
+            else
+                his[x][p]++;
+        }
+    }
+```
+
+And I saved the red color values to the file.
+
+``` C#
+    // Red color
+    Color colr = Color.FromArgb(255, 255, 0, 0);
+
+    StringBuilder sbb = new StringBuilder();
+    foreach (var h in his)
+    {
+        sbb.Append((char)h[colr]);
+    }
+    
+    // Save to file
+    File.WriteAllText("cols_to_ascii.txt", sbb.ToString());
+```
+
 
