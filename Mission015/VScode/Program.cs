@@ -142,12 +142,11 @@ namespace Mission015
             Console.WriteLine($"Bitmap dimension: {W}x{H}");
 
             Dictionary<Color, int>[] his = new Dictionary<Color, int>[W];
-            for (int x = 0; x < his.Length; x++)
-                his[x] = new Dictionary<Color, int>();
 
             Console.WriteLine($"Analyse rows...");
             for (int x = 0; x < W; x++)
             {
+                his[x] = new Dictionary<Color, int>();
                 for (int y = 0; y < H; y++)
                 {
                     Color p = bmp.GetPixel(x, y);
@@ -168,6 +167,7 @@ namespace Mission015
 
             //SaveToSCV("counts_in_cols.csv", his, dif_colors, (d, k) => d[k]);
 
+            // Red color
             Color colr = Color.FromArgb(255, 255, 0, 0);
 
             StringBuilder sbb = new StringBuilder();
