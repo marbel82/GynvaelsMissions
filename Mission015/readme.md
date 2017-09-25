@@ -25,8 +25,8 @@ blogpost / post your solution / code online, please add a link as well!
 P.S. I'll show/explain the solution on the stream in ~one week.
 ```
 
-Chart:
+Downloaded chart:
 
-![the chart](http://gynvael.vexillium.org/ext/6c09e7b9cb58b1d939845d68fccd0b1a5d466a32_mission_15_leak.png)
+![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/mission_15_leak shadow.png)
 
 
