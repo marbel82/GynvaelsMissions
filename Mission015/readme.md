@@ -27,6 +27,6 @@ P.S. I'll show/explain the solution on the stream in ~one week.
 
 Downloaded chart:
 
-![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/mission_15_leak shadow.png)
+![chart]("https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/mission_15_leak shadow.png")
 
 
