@@ -1,4 +1,4 @@
-﻿# Gynvael’s Mission 015 (C#)
+﻿# Gynvael’s Mission 015
 
 
 ```
@@ -24,7 +24,9 @@ blogpost / post your solution / code online, please add a link as well!
 
 P.S. I'll show/explain the solution on the stream in ~one week.
 ```
+[Back to live stream](https://youtu.be/BQRX3owv2JI?t=7059)
 
+# Solution (C#)
 ## Part 1/2
 
 Downloaded chart:
@@ -70,7 +72,7 @@ And I saved the red color values to the file.
 
 ## Part 2/2
 
-Now we have php code:
+The data saved in the file is php code:
 
 ``` php
 <?php
