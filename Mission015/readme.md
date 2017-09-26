@@ -110,7 +110,7 @@ for ($i = 0; $i < 25; $i += 5) {
 die("GW!");
 ```
 
-We have 5 MD5 Checksum and we we need to find 5 passwords.
+We have 5 MD5 Checksum and we need to find 5 password pieces.
 
 ``` C#
     string guesspass = Find5CharPassword(args[0]);
