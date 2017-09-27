@@ -1,6 +1,9 @@
 .vs
-Mission015/VScode/.vs
-Mission015/VScode/obj
 *.pdb
 *.pch
+Mission015/VScode/.vs
+Mission015/VScode/obj
 Mission015/VScode/bin/Debug/Mission015.exe.config
+Mission016/VScode/.vs
+Mission016/VScode/obj
+Mission016/VScode/bin/Debug/Mission016.exe.config
