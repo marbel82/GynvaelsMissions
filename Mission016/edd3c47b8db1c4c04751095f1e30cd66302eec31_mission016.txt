@@ -1,0 +1,27 @@
+MISSION 016               goo.gl/zqvPQD             DIFFICULTY: ████████░░ [8╱10]
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
+                                                    Operation codename: "Pasokon"
+
+During the operational game our spy (codename "Martin") managed to intercept
+hostile communication.
+
+  goo.gl/MoYBAx
+
+Unfortunately, we have no idea how to decode it. To make matters worse, our most
+well versed in crypto agent (codename "Scottie") is on a mission right now and
+cannot help us. Your handler advised to use your skills.
+
+The fate of the Chunar rests in your hands!
+
+And remember - if something is not clear, you have a license to bruteforce.
+
+Good luck!
+Over and out.
+
+--
+
+If you find the answer, put it in the comments under this video! If you write a
+blogpost / post your solution / code online, please add a link as well!
+
+P.S. I'll show/explain the solution in a video in one or two weeks.
+P.S.2. This mission was brought to you by foxtrot_charlie!
