@@ -17,7 +17,7 @@ namespace Mission015
         static void Main(string[] args)
         {
             // Step 1
-            // ConvertFromBase64();
+             ConvertFromBase64();
 
             // Step 2
             ReadWAVEData();
