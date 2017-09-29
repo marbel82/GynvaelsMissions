@@ -17,14 +17,100 @@ namespace Mission015
         static void Main(string[] args)
         {
             // Step 1
-             ConvertFromBase64();
+            ConvertFromBase64();
 
             // Step 2
             //ReadWAVEData();
 
             readWav("frombase64.wav", out float[] L, out float[] R);
 
+            //FindSomething1(L);
 
+            FindSomething2(L);
+
+
+
+            Console.WriteLine("");
+
+            //Console.ReadLine();
+        }
+        //_________________________________________________________________________________________
+        static void FindSomething2(float[] L)
+        {
+            List<double> int0 = new List<double>();
+
+            for (int t = 1; t < L.Length; t++)
+            {
+                if (((L[t - 1] <= 0) && (L[t] > 0))
+                    || ((L[t - 1] >= 0) && (L[t] < 0)))
+                {
+                    // Calculation of linear function parameters
+                    double x1 = t - 1;
+                    //double x2 = t;
+                    double y1 = L[t - 1];
+                    double y2 = L[t];
+
+                    //double a = (y2 - y1) / x2 - x1;
+                    double a = (y2 - y1);    // x2 - x1 == 1
+
+                    double b = y1 - a * x1;
+
+                    // Intersection with OX axis
+                    double t0 = -b / a;
+                    
+                    int0.Add(t0);
+                }
+            }
+
+            List<double> dif = new List<double>();
+
+            for (int i = 1; i < int0.Count; i++)
+            {
+                double h = int0[i] - int0[i - 1];
+                //h = ((int)(h * 10)) / 10.0;
+                h = ((int)(h * 10));
+                dif.Add(h);    
+            }
+
+            List<double> dist = new List<double>();
+            List<int> histo = new List<int>();
+
+            double prev = dif[0];
+            dist.Add(prev);
+            histo.Add(1);
+            for (int i = 1; i < dif.Count; i++)
+            {
+                if (dif[i] != prev)
+                {
+                    prev = dif[i];
+                    dist.Add(prev);
+                    histo.Add(1);
+                }
+                else
+                    histo[histo.Count - 1]++;
+            }
+
+            var arr = dist;
+            StringBuilder sb = new StringBuilder();
+            //int0.Select(d => { sb.AppendLine($"{d}"); return 0; }).Count();
+            foreach (var d in arr) sb.AppendLine($"{d}");
+            File.WriteAllText("dist.csv", sb. ToString());
+
+            double dmin = dist.Min();
+            byte[] distb = new byte[dist.Count];
+            for (int i = 0; i < dist.Count; i++)
+            {
+                distb[i] = (byte)(dist[i] + 65 - dmin);
+                //if (distb[i] == 'F') distb[i] = (byte)'.';
+                //if (distb[i] == 'A') distb[i] = (byte)'#';
+                //distb[i] = (byte)(dist[i] + '0'- mind);
+            }
+            File.WriteAllBytes("distb.txt", distb);
+
+        }
+        //_________________________________________________________________________________________
+        static void FindSomething1(float[] L)
+        {
             List<int> arr = new List<int>();
 
             for (int i = 1; i < L.Length; i++)
@@ -75,16 +161,12 @@ namespace Mission015
             List<int> distsum2 = new List<int>();
             for (int i = 1; i < dist2count; i++)
             {
-                distsum2.Add((dist[i * 2] + dist[i * 2 + 1])/ 2);
+                distsum2.Add((dist[i * 2] + dist[i * 2 + 1]) / 2);
             }
             dist = distsum2;
 
             StringBuilder sb = new StringBuilder();
-
-            foreach (var d in dist)
-            {
-                sb.AppendLine($"{d}");
-            }
+            foreach (var d in dist) sb.AppendLine($"{d}");
             File.WriteAllText("dist.csv", sb.ToString());
 
             int dmin = dist.Min();
@@ -109,11 +191,8 @@ namespace Mission015
                 //distb[i] = (byte)(dist[i] + '0'- mind);
             }
             File.WriteAllBytes("histob.txt", histob);
-
-            Console.WriteLine("");
-
-            //Console.ReadLine();
         }
+
         //_________________________________________________________________________________________
         static void ConvertFromBase64()
         {
@@ -156,6 +235,7 @@ namespace Mission015
             byte[] byteArray = reader.ReadBytes(dataSize);
 
         }
+
         //_________________________________________________________________________________________
         static bool readWav(string filename, out float[] L, out float[] R)
         {
