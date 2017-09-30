@@ -57,7 +57,7 @@ namespace Mission015
 
                     // Intersection with OX axis
                     double t0 = -b / a;
-                    
+
                     int0.Add(t0);
                 }
             }
@@ -67,10 +67,21 @@ namespace Mission015
             for (int i = 1; i < int0.Count; i++)
             {
                 double h = int0[i] - int0[i - 1];
-                //h = ((int)(h * 10)) / 10.0;
-                h = ((int)(h * 10));
-                dif.Add(h);    
+                h = ((int)(h * 10)) / 10.0;
+                //h = ((int)(h * 10));
+                dif.Add(h);
             }
+            //===================================
+            int dif2count = dif.Count / 2;
+            List<double> difsum2 = new List<double>();
+
+            for (int i = 0; i < dif2count; i++)
+                difsum2.Add(dif[i * 2] + dif[i * 2 + 1]);
+            dif = difsum2;
+
+
+
+            //===================================
 
             List<double> dist = new List<double>();
             List<int> histo = new List<int>();
@@ -89,24 +100,43 @@ namespace Mission015
                 else
                     histo[histo.Count - 1]++;
             }
+            //===================================
 
-            var arr = dist;
-            StringBuilder sb = new StringBuilder();
-            //int0.Select(d => { sb.AppendLine($"{d}"); return 0; }).Count();
-            foreach (var d in arr) sb.AppendLine($"{d}");
-            File.WriteAllText("dist.csv", sb. ToString());
+            SaveToCSV("dist.csv", dif); 
 
             double dmin = dist.Min();
             byte[] distb = new byte[dist.Count];
             for (int i = 0; i < dist.Count; i++)
             {
-                distb[i] = (byte)(dist[i] + 65 - dmin);
+                //distb[i] = (byte)((48000 / dist[i]) / 50);
+                distb[i] = (byte)(dist[i] * 6);
+                //distb[i] = (byte)(dist[i] + 65 - dmin);
                 //if (distb[i] == 'F') distb[i] = (byte)'.';
                 //if (distb[i] == 'A') distb[i] = (byte)'#';
                 //distb[i] = (byte)(dist[i] + '0'- mind);
             }
-            File.WriteAllBytes("distb.txt", distb);
+            File.WriteAllBytes("distb.data", distb);
 
+            int hmin = histo.Min();
+            byte[] histob = new byte[histo.Count];
+            for (int i = 0; i < histo.Count; i++)
+            {
+                histob[i] = (byte)(histo[i] + '0' - hmin);
+                //if (distb[i] == 'F') distb[i] = (byte)'.';
+                //if (distb[i] == 'A') distb[i] = (byte)'#';
+                //distb[i] = (byte)(dist[i] + '0'- mind);
+            }
+            File.WriteAllBytes("histob.txt", histob);
+
+            SaveToCSV("histo.txt", histo.Where(x=>x>1));
+        }
+        //_________________________________________________________________________________________
+        static void SaveToCSV<T>(string filename, IEnumerable<T> col)
+        {
+            StringBuilder sb = new StringBuilder();
+            //int0.Select(d => { sb.AppendLine($"{d}"); return 0; }).Count();
+            foreach (var c in col) sb.AppendLine($"{c}");
+            File.WriteAllText(filename, sb.ToString());
         }
         //_________________________________________________________________________________________
         static void FindSomething1(float[] L)
