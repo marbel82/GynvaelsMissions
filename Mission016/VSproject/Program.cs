@@ -38,6 +38,8 @@ namespace Mission015
         static void FindSomething2(float[] L)
         {
             List<double> int0 = new List<double>();
+            List<double> freq = new List<double>();
+
 
             for (int t = 1; t < L.Length; t++)
             {
@@ -60,8 +62,35 @@ namespace Mission015
 
                     int0.Add(t0);
                 }
+
+                if (int0.Count >= 2)
+                {
+                    if (t % 4 == 0)
+                    {
+                        double h = int0[int0.Count - 1] - int0[int0.Count - 2];
+                        //h = ((int)(h * 10)) / 10.0;
+
+                        freq.Add(h);
+                    }
+                }
             }
 
+            SaveToCSV("freq.csv", freq);
+            //===================================
+            double fmin = freq.Min();
+            double fmax = freq.Max();
+            byte[] freqb = new byte[freq.Count];
+            for (int i = 0; i < freq.Count; i++)
+            {
+                //freqb[i] = (byte)((48000 / dist[i]) / 50);
+                freqb[i] = (byte)((freq[i] - 10) * 20);
+                //distb[i] = (byte)(dist[i] + 65 - dmin);
+                //if (distb[i] == 'F') distb[i] = (byte)'.';
+                //if (distb[i] == 'A') distb[i] = (byte)'#';
+                //distb[i] = (byte)(dist[i] + '0'- mind);
+            }
+            File.WriteAllBytes("freqd.data", freqb);
+            //===================================
             List<double> dif = new List<double>();
 
             for (int i = 1; i < int0.Count; i++)
@@ -71,6 +100,19 @@ namespace Mission015
                 //h = ((int)(h * 10));
                 dif.Add(h);
             }
+            //===================================
+            //List<double> freq = new List<double>();
+            //for (int t = 0; t < L.Length; t += 2)
+            //{
+            //    double tfind = t;
+            //    var tt = int0.Select((tint, index) => new { tint, index }).FirstOrDefault(q => q.tint > tfind);
+
+
+            //    freq.Add(dif[(tt.index - 2) < 0 ? 0 : tt.index - 2]);
+
+            //}
+
+
             //===================================
             int dif2count = dif.Count / 2;
             List<double> difsum2 = new List<double>();
@@ -102,7 +144,7 @@ namespace Mission015
             }
             //===================================
 
-            SaveToCSV("dist.csv", dif); 
+            SaveToCSV("dist.csv", dif);
 
             double dmin = dist.Min();
             byte[] distb = new byte[dist.Count];
@@ -128,8 +170,9 @@ namespace Mission015
             }
             File.WriteAllBytes("histob.txt", histob);
 
-            SaveToCSV("histo.txt", histo.Where(x=>x>1));
+            SaveToCSV("histo.txt", histo.Where(x => x > 1));
         }
+
         //_________________________________________________________________________________________
         static void SaveToCSV<T>(string filename, IEnumerable<T> col)
         {
