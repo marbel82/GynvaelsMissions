@@ -143,7 +143,7 @@ namespace Mission015
 
             Dictionary<Color, int>[] his = new Dictionary<Color, int>[W];
 
-            Console.WriteLine($"Analyse rows...");
+            Console.WriteLine("Analyse image...");
             for (int x = 0; x < W; x++)
             {
                 his[x] = new Dictionary<Color, int>();

@@ -33,12 +33,12 @@ Downloaded chart:
 
 ![chart](https://github.com/marbel82/GynvaelsMissions/blob/master/Mission015/mission_15_leak%20shadow.png)
 
-For each column I created a dictionary where the key is color, and the value is the number of occurrences.
+For each column I created a dictionary where the key is color, and the value is the number of occurrences. I want to find all color values.
 
 ``` C#
     Dictionary<Color, int>[] his = new Dictionary<Color, int>[W];
 
-    Console.WriteLine($"Analyse rows...");
+    Console.WriteLine("Analyse image...");
     for (int x = 0; x < W; x++)
     {
         his[x] = new Dictionary<Color, int>();
@@ -53,8 +53,8 @@ For each column I created a dictionary where the key is color, and the value is 
         }
     }
 ```
-
-And I saved the red color values to the file.
+There are only 3 different colors in the image.
+I saved the red color values to the file.
 
 ``` C#
     // Red color
@@ -130,3 +130,5 @@ Finally:
 Password is:
 
 ### Pie charts are delicious!
+
+[Video with solutions on GynvaelEN channel](https://youtu.be/sgocpmsC14o)
