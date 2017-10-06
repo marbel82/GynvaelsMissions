@@ -40,22 +40,20 @@ namespace Mission015
             List<double> int0 = new List<double>();
             List<double> freq = new List<double>();
 
-
             for (int t = 1; t < L.Length; t++)
             {
                 if (((L[t - 1] <= 0) && (L[t] > 0))
                     || ((L[t - 1] >= 0) && (L[t] < 0)))
                 {
                     // Calculation of linear function parameters
-                    double x1 = t - 1;
-                    //double x2 = t;
+                    double t1 = t - 1;
+                    //double t2 = t;
                     double y1 = L[t - 1];
                     double y2 = L[t];
 
-                    //double a = (y2 - y1) / x2 - x1;
-                    double a = (y2 - y1);    // x2 - x1 == 1
-
-                    double b = y1 - a * x1;
+                    //double a = (y2 - y1) / t2 - t1;
+                    double a = (y2 - y1);    // t2 - t1 == 1
+                    double b = y1 - a * t1;
 
                     // Intersection with OX axis
                     double t0 = -b / a;
@@ -68,8 +66,6 @@ namespace Mission015
                     if (t % 4 == 0)
                     {
                         double h = int0[int0.Count - 1] - int0[int0.Count - 2];
-                        //h = ((int)(h * 10)) / 10.0;
-
                         freq.Add(h);
                     }
                 }
