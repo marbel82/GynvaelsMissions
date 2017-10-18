@@ -8,8 +8,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
 using System.Diagnostics;
+using MyCommon;
 
-namespace Mission015
+namespace Mission016
 {
     class Program
     {
@@ -17,22 +18,131 @@ namespace Mission015
         static void Main(string[] args)
         {
             // Step 1
-            ConvertFromBase64();
+            //ConvertFromBase64();
 
             // Step 2
-            //ReadWAVEData();
-
+            //--ReadWAVEData();    
             readWav("frombase64.wav", out float[] L, out float[] R);
 
-            //FindSomething1(L);
-
+            //--FindSomething1(L);    
             FindSomething2(L);
 
-
+            // Step 3
+            FindPlayfair();
 
             Console.WriteLine("");
 
             //Console.ReadLine();
+        }
+        //_________________________________________________________________________________________
+        static void FindPlayfair()
+        {
+            char[,] T = new char[5, 5] {      // y, x
+                { '#', '#', 'R', 'O', 'N'},
+                { 'D', 'I', 'Y', 'M', 'A'},
+                { 'U', 'Z', '#', '#', '#'},
+                { 'B', 'C', 'K', 'P', '#'},
+                { '#', '#', 'V', 'W', 'X'},
+            };
+
+            string pass0 = "Y DHXDMW BQLF KDYNV";
+            string pass = "YDHXDMWBQLFKDYNV";
+            char[] miss = new char[9] { 'E', 'F', 'G', 'H', 'J', 'L', 'Q', 'S', 'T' };
+
+
+            StringBuilder sb = new StringBuilder();
+
+            Permutation perm = new Permutation(8);
+
+            while (perm.Next())
+            {
+                T = PutMissToTab(T, miss, perm);
+                string decpass = Decrypt(T, pass);
+                sb.AppendLine($"{decpass}");
+            }
+
+            File.WriteAllText("playfair.txt", sb.ToString());
+
+        }
+        static char[,] PutMissToTab(char[,] tab55, char[] miss, Permutation perm)
+        {
+            //char[,] T = (char[,])tab55.Clone();
+            char[,] T = tab55;
+
+            T[0, 0] = miss[perm.Perm[0]];
+            T[0, 1] = miss[perm.Perm[1]];
+            T[2, 2] = miss[perm.Perm[2]];
+            T[2, 3] = miss[perm.Perm[3]];
+            T[2, 4] = miss[perm.Perm[4]];
+            T[3, 4] = miss[perm.Perm[5]];
+            T[4, 0] = miss[perm.Perm[6]];
+            T[4, 1] = miss[perm.Perm[7]];
+            return T;
+        }
+
+        static string Decrypt(char[,] tab, string passc)
+        {
+            int len = passc.Length;
+            string pa = "";
+
+            for (int i = 0; i < len; i += 2)
+            {
+                char c1 = passc[i];
+                char c2 = passc[i + 1];
+
+                FindReversePair(tab, ref c1, ref c2);
+
+                pa += c1;
+                pa += c2;
+            }              
+
+            return pa.Insert(1, " ").Insert(8, " ").Insert(13, " ");
+        }
+        static void FindReversePair(char[,] tab, ref char c1, ref char c2)
+        {
+            int x1, x2, y1, y2;
+            FindPos(tab, c1, out y1, out x1);
+            FindPos(tab, c2, out y2, out x2);
+
+            if (y1 == y2)
+            {
+                x1 = dec(x1);
+                x2 = dec(x2);
+            }
+            else if (x1 == x2)
+            {
+                y1 = dec(y1);
+                y2 = dec(y2);
+            }
+            else
+            {
+                int xx = x1;
+                x1 = x2;
+                x2 = xx;
+            }
+
+            c1 = tab[y1, x1];
+            c2 = tab[y2, x2];     
+
+        }
+        static int dec(int p)
+        {
+            if (p == 0)
+                return 4;
+            else
+                return p - 1;
+        }
+        static void FindPos(char[,] tab, char c, out int y, out int x)
+        {
+            for (int i = 0; i < 5; i++)
+                for (int j = 0; j < 5; j++)
+                    if (tab[i, j] == c)
+                    {
+                        x = j;
+                        y = i;
+                        return;
+                    }
+            throw new Exception("Something went wrong!");
         }
         //_________________________________________________________________________________________
         static void FindSomething2(float[] L)
