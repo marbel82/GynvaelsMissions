@@ -1,0 +1,10 @@
+
+
+D:\_Moje_\GIT\GynvaelsMissions\Misja013\VSproject\bin\Debug>python binwalk -e misja013.png
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             PNG image, 800 x 800, 8-bit/color RGB, non-interlaced
+41            0x29            Zlib compressed data, default compression
+
+
