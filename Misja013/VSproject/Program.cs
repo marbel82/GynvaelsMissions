@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 
 namespace Misja013
 {
@@ -14,55 +15,53 @@ namespace Misja013
         {
             //CountAllColors();
 
-            AnalyseStrangeRows();
+            //AnalyseFifthColumn();
 
-
-            //LoadExtracted29();   // Convert bitmap to text
-
+            SimpleSolution013();
         }
         //_________________________________________________________________________________________
-        public static void LoadExtracted29()
+        public static void SimpleSolution013()
         {
-            byte[] filedata = File.ReadAllBytes(@"_misja013.png.extracted\29");
+            byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
 
-            Dictionary<byte, int> his = new Dictionary<byte, int>();
+            byte[] txt = new byte[800];
 
-            for (int b = 0; b < filedata.Length; b++)
-            {
-                if (!his.ContainsKey(filedata[b]))
-                    his[filedata[b]] = 1;
-                else
-                    his[filedata[b]]++;
+            for (int i = 0, b = 0; i < edata.Length; i += 2401, b++)
+                txt[b >> 3] |= (byte)(edata[i] << (b & 0x7));
 
-                if (filedata[b] == 255)
-                    filedata[b] = 0;
-                else if (filedata[b] == 1)
-                    filedata[b] = 200;
-
-            }
-            File.WriteAllBytes("extracted29.data", filedata);
-
-            StringBuilder sb = new StringBuilder();
-            foreach (var h in his)
-                sb.AppendLine($"{h.Key}\t{h.Value}");
-            File.WriteAllText("extracted29.csv", sb.ToString());
-
-
+            File.WriteAllBytes("solution.txt", txt);
         }
         //_________________________________________________________________________________________
-        public static void AnalyseStrangeRows()
+        public static void SimpleSolutionUnpack()
+        {
+            byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
+
+            //DeflateStream
+
+            byte[] txt = new byte[800];
+
+            for (int i = 0, b = 0; i < edata.Length; i += 2401, b++)
+                txt[b >> 3] |= (byte)(edata[i] << (b & 0x7));
+
+            File.WriteAllBytes("solution.txt", txt);
+        }
+        //_________________________________________________________________________________________
+        /// <summary>
+        /// Parses pixels in the fifth column in an image obtained from GIMP.
+        /// </summary>
+        public static void AnalyseFifthColumn()
         {
             Bitmap bmp = new Bitmap("29data_in_grayscale.png");
-            int W = bmp.Width;
-            int H = bmp.Height;
 
-            byte[] column = new byte[H];
+            byte[] column = new byte[bmp.Height];
+
             // Scan fifth column
-            for (int y = 0; y < H; y++)
+            for (int y = 0; y < bmp.Height; y++)
                 column[y] = bmp.GetPixel(4, y).R;
 
-             //column = column.Skip(2).ToArray(); // Shift array
+            //column = column.Skip(2).ToArray(); // Shift array
 
+            // Save bits to text file
             byte[] coltofilen = Array.ConvertAll(column, a => (a == 0) ? (byte)'0' : (byte)'1');
             File.WriteAllBytes("column5.txt", coltofilen);
 
@@ -77,16 +76,17 @@ namespace Misja013
             File.WriteAllBytes("column5_in_ascii.txt", columnG8);
         }
         //_________________________________________________________________________________________
+        /// <summary>
+        /// Find all the colors in the picture.
+        /// </summary>
         public static void CountAllColors()
         {
             Bitmap bmp = new Bitmap("misja013.png");
-            int W = bmp.Width;
-            int H = bmp.Height;
 
             Dictionary<Color, int> his = new Dictionary<Color, int>();
 
-            for (int y = 0; y < H; y++)
-                for (int x = 0; x < W; x++)
+            for (int y = 0; y < bmp.Height; y++)
+                for (int x = 0; x < bmp.Width; x++)
                 {
                     Color p = bmp.GetPixel(x, y);
                     his[p] = (his.ContainsKey(p)) ? his[p] + 1 : 1;
@@ -108,20 +108,14 @@ namespace Misja013
 
             Console.WriteLine($"Bitmap dimension: {W}x{H}");
 
-            Dictionary<Color, int> his = new Dictionary<Color, int>();
-
             int[] hisInCol = Enumerable.Repeat(0, W).ToArray();
             int[] hisInRow = Enumerable.Repeat(0, H).ToArray();
 
+            // Count all the black pixels in the rows and columns
             for (int y = 0; y < H; y++)
                 for (int x = 0; x < W; x++)
                 {
                     Color p = bmp.GetPixel(x, y);
-
-                    if (!his.ContainsKey(p))
-                        his[p] = 1;
-                    else
-                        his[p]++;
 
                     if (p.R == 0)
                     {
@@ -141,30 +135,6 @@ namespace Misja013
 
             File.WriteAllBytes("cols_to_ascii.data", Array.ConvertAll(hisInCol, i => (byte)i));
             File.WriteAllBytes("rows_to_ascii.data", Array.ConvertAll(hisInRow, i => (byte)i));
-
-
-
-
-            //// How many different colors were found
-            //var dif_colors = his.SelectMany(x => x.Keys).Distinct();
-
-            //Console.WriteLine("Colors used in bitmap:");
-            //foreach (Color col in dif_colors)
-            //    Console.WriteLine($"  {col}");
-
-            //SaveToSCV("counts_in_rows.csv", his, dif_colors, (d, k) => d.ContainsKey(k) ? d[k] : -9);
-            //SaveToSCV("counts_in_rows.csv", his, dif_colors, (d, k) => d.ContainsKey(k) ? d[k] : -9);
-
-            //// Red color
-            //Color colr = Color.FromArgb(255, 255, 0, 0);
-
-            //StringBuilder sb = new StringBuilder();
-            //foreach (var h in his)
-            //{
-            //    sb.Append((char)h[colr]);
-            //}
-            //// Save to file
-            //File.WriteAllText("cols_to_ascii.txt", sb.ToString());
         }
         //_________________________________________________________________________________________
         public static void SaveToDataFile(string filename, Array arr)
@@ -174,7 +144,6 @@ namespace Misja013
                 sb.Append((char)a);
             File.WriteAllText(filename, sb.ToString());
         }
-
         //_________________________________________________________________________________________
         // Save items to SVG file.
         // Each item is placed in a row:
