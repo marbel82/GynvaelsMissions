@@ -22,7 +22,8 @@ namespace Misja013
         //_________________________________________________________________________________________
         public static void SimpleSolution013()
         {
-            byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
+            //byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
+            byte[] edata = SimpleSolutionUnpack();
 
             byte[] txt = new byte[800];
 
@@ -32,18 +33,14 @@ namespace Misja013
             File.WriteAllBytes("solution.txt", txt);
         }
         //_________________________________________________________________________________________
-        public static void SimpleSolutionUnpack()
+        public static byte[] SimpleSolutionUnpack()
         {
-            byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
-
-            //DeflateStream
-
-            byte[] txt = new byte[800];
-
-            for (int i = 0, b = 0; i < edata.Length; i += 2401, b++)
-                txt[b >> 3] |= (byte)(edata[i] << (b & 0x7));
-
-            File.WriteAllBytes("solution.txt", txt);
+            FileStream fs = new FileStream("misja013.png", FileMode.Open);
+            fs.Seek(0x29+2, SeekOrigin.Begin);
+            MemoryStream decomp = new MemoryStream();
+            DeflateStream ds = new DeflateStream(fs, CompressionMode.Decompress);
+            ds.CopyTo(decomp);
+            return decomp.ToArray();
         }
         //_________________________________________________________________________________________
         /// <summary>
