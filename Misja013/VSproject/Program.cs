@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Misja013
 {
@@ -22,21 +24,27 @@ namespace Misja013
         //_________________________________________________________________________________________
         public static void SimpleSolution013()
         {
-            //byte[] edata = File.ReadAllBytes(@"_misja013.png.extracted\29");
-            byte[] edata = SimpleSolutionUnpack();
+            // Read image data decompressed by binwalk
+            //byte[] imgdata = File.ReadAllBytes(@"_misja013.png.extracted\29"); 
+
+            // Read image data from png
+            byte[] imgdata = SimpleSolution013Unpack();
 
             byte[] txt = new byte[800];
 
-            for (int i = 0, b = 0; i < edata.Length; i += 2401, b++)
-                txt[b >> 3] |= (byte)(edata[i] << (b & 0x7));
+            for (int i = 0, b = 0; i < imgdata.Length; i += 2401, b++)
+                txt[b >> 3] |= (byte)(imgdata[i] << (b & 0x7));
 
             File.WriteAllBytes("solution.txt", txt);
         }
         //_________________________________________________________________________________________
-        public static byte[] SimpleSolutionUnpack()
+        /// <summary>
+        /// Decompress image data from png
+        /// </summary>
+        public static byte[] SimpleSolution013Unpack()
         {
             FileStream fs = new FileStream("misja013.png", FileMode.Open);
-            fs.Seek(0x29+2, SeekOrigin.Begin);
+            fs.Seek(0x29 + 2, SeekOrigin.Begin);
             MemoryStream decomp = new MemoryStream();
             DeflateStream ds = new DeflateStream(fs, CompressionMode.Decompress);
             ds.CopyTo(decomp);
