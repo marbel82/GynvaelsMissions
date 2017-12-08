@@ -1,0 +1,34 @@
+MISJA 016                 goo.gl/DAVduj           DIFFICULTY: █████████░ [9╱10]
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
+                Grudzień, rok 3540. Planeta Zumzum. Biuro nasłuchu kosmicznego.
+
+Agenci 1337,
+
+Nasz transgalaktyczny myśliwiec Striker 0xdeafbeef przechwycił podejrzaną
+wiadomość, która nadeszła z kierunku "kolorowej planety". Naszemu wydziałowi
+ds. szyfrów udało się zdekodować transmisję. Niestety otrzymany obraz jest
+nieczytelny i zawiera podejrzane artefakty.
+
+Podejrzewamy, że prawdziwa wiadomość zaszyta jest głębiej. Zwracamy się do Was
+z prośbą o pomoc. Waszym zadaniem będzie odnalezienie prawidłowego przekazu.
+
+Jednostko, w Tobie cała nadzieja!
+
+    Przechwycony strumień: goo.gl/VNhhTW
+
+Powodzenia!
+
+-------------------------------------------------------------------------------
+Hint1: Pliki są zapisane ciągiem, nie są pofragmentowane.
+Hint2: Flaga jest wyraźnie oznaczona 🚩
+Hint3: Warto zwrócić uwagę na ustawienia okna i skalę, mogą dużo zmienić.
+Hint4: Mamy podejrzenia, że hasło może być naprawdę silnie. Nie warto go łamać.
+Natomiast mamy przeczucie graniczące z pewnością, że ono również jest zawarte
+w wiadomości, natomiast jego reprezentacja może być oldschoolowa.
+Hint5: Te ustawienia są naprawdę ważne.
+
+
+Odzyskaną wiadomość umieść w komentarzu pod tym video.
+Linki do kodu/wpisów na blogu/etc z opisem rozwiązania są również mile widziane!
+
+P.S. Misja została przygotowana w całości przez marbel82 - japrogramista.net
