@@ -34,6 +34,6 @@ with open("wave_from_stream.wav", "rb") as f:
 
 Decode(wav, 40, LUT)
 
-with open("solved.wav", "wb") as f:
+with open("flag.wav", "wb") as f:
     f.write(bytes(wav))
 
