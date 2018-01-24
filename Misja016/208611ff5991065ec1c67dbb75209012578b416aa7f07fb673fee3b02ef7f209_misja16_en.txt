@@ -1,0 +1,37 @@
+MISJA 016 EN            goo.gl/AFeP1J              DIFFICULTY: █████████░ [9╱10]
+┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
+                                     Zumzum planet. HQ of Space Listening Agency
+                                                             December, year 3540
+
+Agents 1337,
+
+Our transgalactic fighter "Striker 0xdeafbeef" captured a suspicious message
+that came from the direction of the "Colorful Planet". Our Cipher Department
+managed to decode that transmission. Unfortunately, received image is unreadable
+and contains weird artifacts.
+
+We think that the real information is hidden. Your have to retrieve original
+message.
+
+Agents, failure is not an option here!
+
+    Captured stream: goo.gl/VNhhTW
+
+Good luck!
+
+-------------------------------------------------------------------------------
+Hint1: Files are not fragmented.
+Hint2: The flag is clearly marked with 🚩
+Hint3: Pay attention to window size settings and scale, they can change a lot.
+Hint4: We suspect that the password can be really strong. It is not worth
+       breaking it. However, we have a feeling that it is also contained in
+       the message.
+Hint5: Seriously, settings are really important.
+
+If you find the answer, put it in the comments under this goo.gl/8VDBUV video!
+If you write a blogpost / post your solution / code online, please add a link as
+well!
+
+P.S. I'll show/explain the solution in a video in some time..
+P.S.2. This mission was brought to you by marbel82 (japrogramista.net) with
+       additional help by foxtrot_charlie.
