@@ -31,12 +31,12 @@ with open("stream.bmp", "rb") as f:
     st = f.read()
     
 #-----------------------------------------------------------
-# Save ZIP file from bitmap. It's not exactly cropped.
+# Save ZIP file from bitmap. I took the indexes more or less.
 with open("mixerpack.zip", "wb") as f:
     f.write(st[0x514:0xAF6])
    
 #-----------------------------------------------------------
-# Save WAVE file from bitmap. It's not exactly cropped.
+# Save WAVE file from bitmap. I took the indexes more or less.
 with open("wave_from_stream.wav", "wb") as f:
     f.write(st[0xD6E:])
     
