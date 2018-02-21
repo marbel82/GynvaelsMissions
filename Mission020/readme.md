@@ -25,7 +25,7 @@ If you tweet about it, include @gynvael to let me know :)
 
 The first link leads us to:
 
-![chart](start.png)
+![chart](GynvaelsMissions/Mission020/start.png)
 
 After decoding on the phone, we get the text:
 
@@ -93,5 +93,5 @@ The thousandth file contains a flag:
 
 ### Flag: QRCalcIsEasy﻿
 
-![chart](69129246053.png)
+![chart](GynvaelsMissions/Mission020/69129246053.png)
 
