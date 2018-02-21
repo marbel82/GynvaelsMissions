@@ -14,7 +14,7 @@ while True:
     qrd = decode(Image.open(io.BytesIO(filecontent)))[0].data.decode()   
     # qrd = "Calc value, add .png, repeat: 64038932,+145,*881,+493,*746"
     
-    math =  qrd[qrd.find('repeat:')+8:]
+    math = qrd[qrd.find('repeat:')+8:]
     v = eval('(' * math.count(',') + math.replace(',', ')'))
     
     fname = str(v)

@@ -58,18 +58,30 @@ while True:
     qrd = decode(Image.open(io.BytesIO(filecontent)))[0].data.decode()   
     # qrd = "Calc value, add .png, repeat: 64038932,+145,*881,+493,*746"
     
-    math =  qrd[qrd.find('repeat:')+8:]
+    math = qrd[qrd.find('repeat:')+8:]
     v = eval('(' * math.count(',') + math.replace(',', ')'))
     
     fname = str(v)
     c += 1
 
 ```
+I have to install:
 
+python -m pip install pypng
+python -m pip install pyqrcode
+python -m pip install qrtools
+python -m pip install pyzbar
+python -m pip install pillow
+
+_________________
 Starting the program... We get a last file url, before the first error.
 
 ```
-Downloading(996): http://gynvael.coldwind.pl/qrmaze/2927388525763480.png
+Downloading(0): http://gynvael.coldwind.pl/qrmaze/start.png
+Downloading(1): http://gynvael.coldwind.pl/qrmaze/29070456023771126.png
+Downloading(2): http://gynvael.coldwind.pl/qrmaze/42088146788180.png
+Downloading(3): http://gynvael.coldwind.pl/qrmaze/75198541.png
+...
 Downloading(997): http://gynvael.coldwind.pl/qrmaze/3155985463053.png
 Downloading(998): http://gynvael.coldwind.pl/qrmaze/30829602240.png
 Downloading(999): http://gynvael.coldwind.pl/qrmaze/1841916582137487834.png
