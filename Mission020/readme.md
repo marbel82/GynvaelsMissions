@@ -65,14 +65,15 @@ while True:
     c += 1
 
 ```
-I have to install:
+I had to install several packages:
 
+```
 python -m pip install pypng
 python -m pip install pyqrcode
 python -m pip install qrtools
 python -m pip install pyzbar
 python -m pip install pillow
-
+```
 _________________
 Starting the program... We get a last file url, before the first error.
 
