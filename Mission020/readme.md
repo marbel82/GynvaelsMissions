@@ -38,9 +38,10 @@ And when we calculate it, we get the name of the next file:
 
 http://gynvael.coldwind.pl/qrmaze/29070456023771126.png
 
-And so on. We must write a program.
+And so on. You need to automate this process.
 
 ``` python
+# Python 3.6.2 on win32
 
 import urllib.request
 from PIL import Image
@@ -65,12 +66,10 @@ while True:
     c += 1
 
 ```
-I had to install several packages:
+While I was writing, I had to install several packages:
 
 ```
 python -m pip install pypng
-python -m pip install pyqrcode
-python -m pip install qrtools
 python -m pip install pyzbar
 python -m pip install pillow
 ```
@@ -81,9 +80,7 @@ Starting the program... We get a last file url, before the first error.
 Downloading(0): http://gynvael.coldwind.pl/qrmaze/start.png
 Downloading(1): http://gynvael.coldwind.pl/qrmaze/29070456023771126.png
 Downloading(2): http://gynvael.coldwind.pl/qrmaze/42088146788180.png
-Downloading(3): http://gynvael.coldwind.pl/qrmaze/75198541.png
 ...
-Downloading(997): http://gynvael.coldwind.pl/qrmaze/3155985463053.png
 Downloading(998): http://gynvael.coldwind.pl/qrmaze/30829602240.png
 Downloading(999): http://gynvael.coldwind.pl/qrmaze/1841916582137487834.png
 Downloading(1000): http://gynvael.coldwind.pl/qrmaze/69129246053.png
