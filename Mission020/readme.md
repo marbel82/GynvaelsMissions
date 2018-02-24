@@ -19,7 +19,8 @@ blogpost / post your solution / code online, please add a link as well!
 If you tweet about it, include @gynvael to let me know :)
 
 ```
-[Back to live stream](https://youtu.be/PiBfI7wltM8?t=6640)
+[Back to live stream #46](https://youtu.be/PiBfI7wltM8?t=6640)
+
 
 # Solution (Python)
 
@@ -38,7 +39,7 @@ And when we calculate it, we get the name of the next file:
 
 http://gynvael.coldwind.pl/qrmaze/29070456023771126.png
 
-And so on. You need to automate this process.
+And so on. We need to automate this process.
 
 ``` python
 # Python 3.6.2 on win32
