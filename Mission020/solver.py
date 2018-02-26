@@ -12,9 +12,11 @@ def saveToFile(filename, content):
         f.write(content)
 
 # s = '75198582,^517,-802,-420,*717,+555,+519,+315'
+# return: '75198541'
 def evalOperations(s):
-    print('eval('+s+')')
-    v = eval('(' * s.count(',') + s.replace(',', ')'))    
+    s = '(' * s.count(',') + s.replace(',', ')')
+    v = str(eval(s))
+    print('  eval('+s+') = ' + v)
     return v
 
 def urlQRCode(s):
@@ -22,8 +24,10 @@ def urlQRCode(s):
     return gyn + s + '.png'
         
 def decodeQR(pngFileContent):
+    # Decode QRCode from the PNG image
     decoded = decode(Image.open(io.BytesIO(pngFileContent)))  
-    return decoded[0].data
+    # decoded = [Decoded(data=b'Calc value, add .png, repeat: 80791583,*615,^381', type='QRCODE')]
+    return decoded[0].data.decode()
   
 fname = 'start'
 c = 0
@@ -34,11 +38,11 @@ while True:
     filecontent = downloadFile(url)
     # saveToFile('qrcodes/'+calc+'.png', filecontent)
     
-    qrd = decodeQR(filecontent).decode()   
+    qrd = decodeQR(filecontent)   
     # qrd = "Calc value, add .png, repeat: 64038932,+145,*881,+493,*746"
      
     rpos = qrd.find('repeat:')    
-    fname = str(evalOperations(qrd[rpos+8:]))
+    fname = evalOperations(qrd[rpos+8:])
 
     c += 1
 
